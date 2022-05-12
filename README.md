@@ -7,18 +7,23 @@ This package is used to sync a staging database with a source (production) datab
 First add this to composer.json
 
 ```json
+    "require": {
+        ...
+        "winterpk/laravel-staging-sync": "dev-master"
+    },
     "repositories": [
         {
+            ...
             "type": "git",
             "url": "git@github.com:winterpk/laravel-staging-sync.git"
         }
     ],
 ```
 
-Then require it thru composer
+Composer update to get it
 
 ```bash
-composer require winterpk/laravel-staging-sync
+composer update winterpk/laravel-staging-sync
 ```
 
 ## Usage
