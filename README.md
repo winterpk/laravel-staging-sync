@@ -1,4 +1,4 @@
-# Very short description of the package
+# Description
 
 This package is used to sync a staging database with a source (production) database. It contains 3 commands: `laravel-staging-sync:sync` `laravel-staging-sync:clear` and `laravel-staging-sync:rollback`. 
 
@@ -8,12 +8,10 @@ First add this to composer.json
 
 ```json
     "require": {
-        ...
         "winterpk/laravel-staging-sync": "dev-master"
     },
     "repositories": [
         {
-            ...
             "type": "git",
             "url": "git@github.com:winterpk/laravel-staging-sync.git"
         }
