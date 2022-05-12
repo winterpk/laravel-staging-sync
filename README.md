@@ -60,7 +60,6 @@ If you discover any security related issues, please email winterpk@gmail.com ins
 ## Credits
 
 -   [Winter King](https://github.com/winterpk)
--   [All Contributors](../../contributors)
 
 ## License
 
