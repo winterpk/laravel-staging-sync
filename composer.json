@@ -1,0 +1,39 @@
+{
+    "name": "winterpk/laravel-staging-sync",
+    "description": "Sync staging mysql database with source database",
+    "keywords": [
+        "winterpk",
+        "staging-sync",
+        "laravel",
+        "mysql"
+    ],
+    "homepage": "https://github.com/winterpk/laravel-staging-sync",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Winter King",
+            "email": "winterpk@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.4|^8.0",
+        "illuminate/support": "^8.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Winterpk\\LaravelStagingSync\\": "src"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Winterpk\\LaravelStagingSync\\LaravelStagingSyncServiceProvider"
+            ]
+        }
+    }
+}
