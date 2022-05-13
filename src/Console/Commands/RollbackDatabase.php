@@ -1,5 +1,5 @@
 <?php
- 
+
 namespace Winterpk\LaravelStagingSync\Console\Commands;
 
 use Illuminate\Console\Command;
@@ -17,14 +17,14 @@ class RollbackDatabase extends Command
      * @var string
      */
     protected $signature = 'laravel-staging-sync:rollback';
- 
+
     /**
      * Description
      *
      * @var string
      */
     protected $description = 'Rolls back the database to the most recent dumpFilePath';
- 
+
     protected $dumpFilePath;
 
     protected $currentDumpFile;

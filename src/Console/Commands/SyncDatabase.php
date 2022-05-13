@@ -1,5 +1,5 @@
 <?php
- 
+
 namespace Winterpk\LaravelStagingSync\Console\Commands;
 
 use Illuminate\Console\Command;
@@ -25,7 +25,7 @@ class SyncDatabase extends Command
                             {db_host? : Optional database host, defaults to localhost}
                             {db_port? : Optional database port, defaults to 3306}
                             {--force : ignore the confirmation prompt and password prompt}';
- 
+
     /**
      * Description
      *
@@ -34,7 +34,7 @@ class SyncDatabase extends Command
     protected $description = 'This is a destructive command will drop the current database and rebuilds 
                               it with the source database. STAGING_SYNC_ATCTIVE=true AND APP_ENV=staging 
                               for this command to work.';
- 
+
     protected $dumpFilePath;
 
     protected $currentDumpFile;
@@ -158,7 +158,6 @@ class SyncDatabase extends Command
 
     private function importSource()
     {
-        Log::info('Importing source database');
         $mysqlImportStringArr = $this->buildMysqlImportString($this->sourceDumpFile);
         $process = Process::fromShellCommandline($mysqlImportStringArr[0]);
         $process->setTimeout(0);
@@ -187,7 +186,6 @@ class SyncDatabase extends Command
                 return false;
             }
         } else {
-            $this->info('Success!');
             return true;
         }
         return true;
@@ -200,6 +198,7 @@ class SyncDatabase extends Command
      */
     public function handle()
     {
+        Log::info('Laravel Staging Sync: Starting Sync');
         $isActive = config('laravel-staging-sync.active');
         if (! $isActive) {
             // abort
@@ -225,6 +224,8 @@ class SyncDatabase extends Command
 
         // Make sure the dumpFilePath exists
         if (! File::isDirectory($this->dumpFilePath)) {
+            $this->info('Creating directory ' . $this->dumpFilePath);
+            Log::info('Laravel Staging Sync: Creating directory ' . $this->dumpFilePath);
             File::makeDirectory($this->dumpFilePath, 0775, true, true);
         }
 
@@ -233,28 +234,31 @@ class SyncDatabase extends Command
 
         // Ask for password if force is false
         if ($this->option('force') === false) {
-            dd($this->secret('What is the database password?'));
             $params['db_pass'] = $this->secret('What is the database password?');
         }
         $this->line('Dumping source database ...');
+        Log::info('Laravel Staging Sync: Dumping source database ...');
         if (! $this->dumpSource($params)) {
             // abort
             return 0;
         }
         $this->line('Source dumpfile created at ' .  $this->sourceDumpFile);
         $this->info('Dumping current database ...');
+        Log::info('Laravel Staging Sync: Dumping current database ...');
         if (! $this->dumpCurrent()) {
             // abort
             return 0;
         }
         $this->line('Current dumpfile created at ' . $this->currentDumpFile);
-        $this->info('Importing new database ...');
+        $this->info('Importing source database ...');
+        Log::info('Laravel Staging Sync: Importing source database ...');
         if (! $this->importSource()) {
             // abort
             return 0;
         }
-        $this->info('The staging database has been synced with production on ' . date('m-d-y H:i:s'));
-        
+        $this->info('Success! The staging database has been synced with production on ' . date('m-d-y H:i:s'));
+        Log::info('Laravel Staging Sync: The staging database has been synced with production on ' .
+            date('m-d-y H:i:s'));
         return 1;
     }
 }

@@ -1,5 +1,5 @@
 <?php
- 
+
 namespace Winterpk\LaravelStagingSync\Console\Commands;
 
 use Illuminate\Console\Command;
@@ -14,14 +14,14 @@ class ClearBackups extends Command
      * @var string
      */
     protected $signature = 'laravel-staging-sync:clear';
- 
+
     /**
      * Description
      *
      * @var string
      */
     protected $description = 'Clears out the dumpFilePath folder';
- 
+
     protected $dumpFilePath;
 
     protected $currentDumpFile;
